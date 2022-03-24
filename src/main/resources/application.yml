@@ -14,9 +14,10 @@ spring:
 
 
 keycloak:
-  auth-server-url: https://localhost:4443/
+  auth-server-url: https://localhost:4443
   realm: spring-test-app
   resource: spring-test-app-client
   public-client: true
+  disable-trust-manager: true
 
 

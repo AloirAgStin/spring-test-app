@@ -24,7 +24,6 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HOSTNAME: localhost:4443
-      KC_HOSTNAME_STRICT: false
       KC_PROXY: passthrough
     ports:
       - 4443:8443

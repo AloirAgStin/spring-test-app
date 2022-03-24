@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class PrivateController {
 
-    @GetMapping(path = "/token/user")
-    @PreAuthorize("hasRole('ROLE_role-user')")
+    @GetMapping(path = "/token")
     public TokenDto getUserToken() {
         return new TokenDto()
                 .setUser(SecurityUtil.getUserId())
@@ -20,8 +19,8 @@ public class PrivateController {
                 .setAuthorities(SecurityUtil.getUserAuthorities());
     }
 
-    @GetMapping(path = "/token/admin")
-    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(path = "/token/user")
+    @PreAuthorize("hasRole('ROLE_customer')")
     public TokenDto getAdminToken() {
         return new TokenDto()
                 .setUser(SecurityUtil.getUserId())
@@ -29,4 +28,13 @@ public class PrivateController {
                 .setAuthorities(SecurityUtil.getUserAuthorities());
     }
 
+
+    @GetMapping(path = "/token/user2")
+    @PreAuthorize("hasRole('ROLE_customer2')")
+    public TokenDto getAdminToken2() {
+        return new TokenDto()
+                .setUser(SecurityUtil.getUserId())
+                .setToken(SecurityUtil.getUserToken())
+                .setAuthorities(SecurityUtil.getUserAuthorities());
+    }
 }
