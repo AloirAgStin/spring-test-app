@@ -29,3 +29,13 @@ services:
       - 4443:8443
     depends_on:
       - postgres
+  wiremock:
+    image: rodolpheche/wiremock
+    container_name: wiremock
+    command: --local-response-templating --verbose
+    restart: always
+    ports:
+      - "127.0.0.1:4999:8080"
+      - "127.0.0.1:4993:8443"
+    volumes:
+      - ../wiremock/data:/home/wiremock:ro

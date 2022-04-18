@@ -13,11 +13,11 @@ import java.io.IOException;
 import java.util.Map;
 
 @Component
-public class MDCFilter extends OncePerRequestFilter implements Ordered {
+public class MDCRequestFilter extends OncePerRequestFilter implements Ordered {
 
     public static final Map<String, String> mdcHeaders = Map.of(
-            "x-b3-traceid", "traceId",
-            "x-b3-spanid", "spanId"
+            "X-B3-TraceId", "traceId",
+            "X-B3-SpanId", "spanId"
     );
 
     @Override
@@ -40,4 +40,5 @@ public class MDCFilter extends OncePerRequestFilter implements Ordered {
     private void initResponse(HttpServletResponse response) {
         mdcHeaders.forEach((key, value) -> response.addHeader(key, MDC.get(value)));
     }
+
 }
