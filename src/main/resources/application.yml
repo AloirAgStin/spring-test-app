@@ -13,8 +13,14 @@ spring:
     resources:
       add-mappings: false
 
-client:
-  test-feign: http://localhost:4999
+spring-test-app:
+  kafka:
+    enabled: true
+    bootstrap-address: localhost:9092
+    topic: "spring-test-app-topic"
+    group-id: fddf7f06-d04c-4efd-9cad-723ca7697a63
+  client:
+    test-feign: http://localhost:4999
 
 keycloak:
   auth-server-url: https://localhost:4443
@@ -22,5 +28,4 @@ keycloak:
   resource: spring-test-app-client
   public-client: true
   disable-trust-manager: true
-
 

@@ -13,28 +13,26 @@ public class PrivateController {
 
     @GetMapping(path = "/token")
     public TokenDto getUserToken() {
-        return new TokenDto()
-                .setUser(SecurityUtil.getUserId())
-                .setToken(SecurityUtil.getUserToken())
-                .setAuthorities(SecurityUtil.getUserAuthorities());
+        return getToken();
     }
 
     @GetMapping(path = "/token/user")
     @PreAuthorize("hasRole('ROLE_customer')")
     public TokenDto getAdminToken() {
-        return new TokenDto()
-                .setUser(SecurityUtil.getUserId())
-                .setToken(SecurityUtil.getUserToken())
-                .setAuthorities(SecurityUtil.getUserAuthorities());
+        return getToken();
     }
-
 
     @GetMapping(path = "/token/user2")
     @PreAuthorize("hasRole('ROLE_customer2')")
     public TokenDto getAdminToken2() {
+        return getToken();
+    }
+
+    private TokenDto getToken() {
         return new TokenDto()
                 .setUser(SecurityUtil.getUserId())
                 .setToken(SecurityUtil.getUserToken())
                 .setAuthorities(SecurityUtil.getUserAuthorities());
     }
+
 }
