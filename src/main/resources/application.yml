@@ -15,7 +15,7 @@ spring:
 
 spring-test-app:
   kafka:
-    enabled: true
+    enabled: false
     bootstrap-address: localhost:9092
     topic: "spring-test-app-topic"
     group-id: fddf7f06-d04c-4efd-9cad-723ca7697a63

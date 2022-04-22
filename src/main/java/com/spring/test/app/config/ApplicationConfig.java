@@ -13,15 +13,15 @@ import org.zalando.problem.violations.ConstraintViolationProblemModule;
 public class ApplicationConfig {
 
     @Bean
+    public KeycloakSpringBootConfigResolver keycloakConfigResolver() {
+        return new KeycloakSpringBootConfigResolver();
+    }
+
+    @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper()
                 .registerModules(new ProblemModule(), new ConstraintViolationProblemModule(), new JavaTimeModule())
                 .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-    }
-
-    @Bean
-    public KeycloakSpringBootConfigResolver keycloakConfigResolver() {
-        return new KeycloakSpringBootConfigResolver();
     }
 
 }
