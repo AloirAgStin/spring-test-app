@@ -5,6 +5,8 @@ server:
       enabled: true
 
 spring:
+  application:
+    name: spring-test-app
   main:
     allow-bean-definition-overriding: true
   mvc:
@@ -12,8 +14,17 @@ spring:
   web:
     resources:
       add-mappings: false
+  config:
+    import: optional:configserver:http://localhost:8071
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
 
 spring-test-app:
+  editable-value: init-value
   kafka:
     enabled: false
     bootstrap-address: localhost:9092

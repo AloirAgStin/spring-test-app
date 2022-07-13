@@ -85,7 +85,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         s.setDefaultRolePrefix("");
         http.authorizeRequests()
                 .expressionHandler(s)
-                .mvcMatchers("/public-api/**").permitAll()
+                .mvcMatchers("/public-api/**", "/refresh", "/actuator/**").permitAll()
                 .mvcMatchers("/api/**").authenticated()
                 .anyRequest().authenticated()
                 .expressionHandler(s);
