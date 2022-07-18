@@ -1,0 +1,13 @@
+{
+  "request" : {
+    "urlPath" : "/http/200",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "http/200.json"
+  }
+}

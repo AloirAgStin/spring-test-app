@@ -1,0 +1,41 @@
+services:
+  postgres:
+    container_name: spring-test-app-db
+    image: postgres
+    volumes:
+      - ./data:/var/lib/postgresql/data:Z
+      - ./backup:/home/backup:rw
+    environment:
+      POSTGRES_DB: spring-test-app-db
+      POSTGRES_USER: spring-test-app
+      POSTGRES_PASSWORD: 82dbe72b-2684-4888-a509-b119a9c613bf
+      PGDATA: /var/lib/postgresql/data/spring-test-app-data
+    ports:
+      - 4432:5432
+  keycloak:
+    container_name: spring-test-app-keycloack
+    build:
+      dockerfile: ../keycloak/dockerfile
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/spring-test-app-db
+      KC_DB_USERNAME: spring-test-app
+      KC_DB_PASSWORD: 82dbe72b-2684-4888-a509-b119a9c613bf
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HOSTNAME: localhost:4443
+      KC_PROXY: passthrough
+    ports:
+      - 4443:8443
+    depends_on:
+      - postgres
+  wiremock:
+    image: rodolpheche/wiremock
+    container_name: wiremock
+    command: --local-response-templating --verbose
+    restart: always
+    ports:
+      - "127.0.0.1:4999:8080"
+      - "127.0.0.1:4993:8443"
+    volumes:
+      - ../wiremock/data:/home/wiremock:ro
