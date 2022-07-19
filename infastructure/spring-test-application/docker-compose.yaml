@@ -1,3 +1,9 @@
+version: '3.8'
+
+networks:
+  spring-test-network:
+    external: true
+
 services:
   vector-dev:
     image: timberio/vector:0.23.0-alpine
@@ -5,10 +11,13 @@ services:
     volumes:
       - ./vector.toml:/etc/vector/vector.toml:ro
       - ./log/:/tmp/
+    networks:
+      - spring-test-network
     ports:
       - 24224:24224
+
   config-server:
-    container_name: spring-test-config-server
+    container_name: config-server
     build:
       context: ../config-server
     logging:
@@ -17,10 +26,9 @@ services:
         fluentd-address: 0.0.0.0:24224
         tag: config-server.logs
         fluentd-async-connect: 'true'
-    ports:
-      - 4071:8071
-  postgres:
-    container_name: spring-test-app-db
+
+  postgres-db:
+    container_name: postgres-db
     image: postgres
     volumes:
       - ./data:/var/lib/postgresql/data:Z
@@ -30,35 +38,41 @@ services:
       POSTGRES_USER: spring-test-app
       POSTGRES_PASSWORD: 82dbe72b-2684-4888-a509-b119a9c613bf
       PGDATA: /var/lib/postgresql/data/spring-test-app-data
+    networks:
+      - spring-test-network
     ports:
       - 4432:5432
+
   keycloak:
-    container_name: spring-test-app-keycloack
+    container_name: keycloak
     build:
       context: ../keycloak
     environment:
-      KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres:5432/spring-test-app-db
+      KC_DB_URL: jdbc:postgresql://postgres-db:5432/spring-test-app-db
       KC_DB_USERNAME: spring-test-app
       KC_DB_PASSWORD: 82dbe72b-2684-4888-a509-b119a9c613bf
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HOSTNAME: localhost:4443
       KC_PROXY: passthrough
+    networks:
+      - spring-test-network
     ports:
       - 4443:8443
     depends_on:
-      - postgres
+      - postgres-db
+
   wiremock:
     image: rodolpheche/wiremock
     container_name: wiremock
     command: --local-response-templating --verbose
     restart: always
-    ports:
-      - "127.0.0.1:4999:8080"
-      - "127.0.0.1:4993:8443"
     volumes:
       - ../wiremock/data:/home/wiremock:ro
+    networks:
+      - spring-test-network
+    ports:
+      - 4999:8080
     logging:
       driver: "fluentd"
       options:

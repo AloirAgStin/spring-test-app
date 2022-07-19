@@ -20,9 +20,13 @@ curl --location --request POST 'https://localhost:4443/realms/spring-test-app/pr
 --data-urlencode 'grant_type=authorization_code'
 ```
 
-
-
-
 ## Config bus:
 https://medium.com/swlh/spring-cloud-config-bus-auto-refresh-properties-for-clients-d18fa4c036cb
 
+
+## Deploy
+### Создать docker-сеть **yourhouse**:<br/>
+`docker network create -d bridge  sprin-test-network`
+
+
+`docker network create --driver=bridge --subnet=172.16.238.0/16 sprin-test-network`
