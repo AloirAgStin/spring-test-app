@@ -35,3 +35,5 @@ build/
 # pg data
 /infastructure/spring-test-application/backup
 /infastructure/spring-test-application/data
+/infastructure/spring-test-application/log
+/infastructure/**/**.jar

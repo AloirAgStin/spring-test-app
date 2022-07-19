@@ -1,0 +1,21 @@
+# Set global options
+[sources.config-service]
+type = "fluent"
+address = "0.0.0.0:24224"
+
+[sinks.file]
+type = "file"
+inputs = [ "config-service" ]
+compression = "none"
+path = "/tmp/service-%Y-%m-%d.log"
+
+[sinks.file.encoding]
+codec = "json"
+
+[sinks.my_sink_id]
+type = "console"
+inputs = [ "config-service" ]
+target = "stdout"
+
+[sinks.my_sink_id.encoding]
+codec = "json"

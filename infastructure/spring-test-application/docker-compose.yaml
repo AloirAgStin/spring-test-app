@@ -1,4 +1,24 @@
 services:
+  vector-dev:
+    image: timberio/vector:0.23.0-alpine
+    container_name: vector-dev
+    volumes:
+      - ./vector.toml:/etc/vector/vector.toml:ro
+      - ./log/:/tmp/
+    ports:
+      - 24224:24224
+  config-server:
+    container_name: spring-test-config-server
+    build:
+      context: ../config-server
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 0.0.0.0:24224
+        tag: config-server.logs
+        fluentd-async-connect: 'true'
+    ports:
+      - 4071:8071
   postgres:
     container_name: spring-test-app-db
     image: postgres
@@ -15,7 +35,7 @@ services:
   keycloak:
     container_name: spring-test-app-keycloack
     build:
-      dockerfile: ../keycloak/dockerfile
+      context: ../keycloak
     environment:
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres:5432/spring-test-app-db
@@ -39,3 +59,9 @@ services:
       - "127.0.0.1:4993:8443"
     volumes:
       - ../wiremock/data:/home/wiremock:ro
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 0.0.0.0:24224
+        tag: wiremock.logs
+        fluentd-async-connect: 'true'
