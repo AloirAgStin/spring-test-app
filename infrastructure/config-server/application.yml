@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    config:
+      server:
+        native:  # native profile
+          search-locations: /config
+

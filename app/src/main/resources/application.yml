@@ -25,16 +25,17 @@ management:
 
 spring-test-app:
   editable-value: init-value
+  client:
+    test-feign: http://localhost:4999
   kafka:
     enabled: false
     bootstrap-address: localhost:9092
     topic: "spring-test-app-topic"
     group-id: fddf7f06-d04c-4efd-9cad-723ca7697a63
-  client:
-    test-feign: http://localhost:4999
+
 
 keycloak:
-  auth-server-url: https://localhost:4443
+  auth-server-url: https://localhost:8443
   realm: spring-test-app
   resource: spring-test-app-client
   public-client: true

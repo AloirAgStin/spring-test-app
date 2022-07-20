@@ -26,6 +26,12 @@ services:
         fluentd-address: 0.0.0.0:24224
         tag: config-server.logs
         fluentd-async-connect: 'true'
+    volumes:
+      -  ../config-server/config:/config
+    networks:
+      - spring-test-network
+    ports:
+      - 4071:8071
 
   postgres-db:
     container_name: postgres-db
@@ -62,20 +68,37 @@ services:
     depends_on:
       - postgres-db
 
+  sprint-test-app:
+    container_name: sprint-test-app
+    build:
+      context: ../app
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 0.0.0.0:24224
+        tag: app.logs
+        fluentd-async-connect: 'true'
+    networks:
+      - spring-test-network
+    ports:
+      - 8080:8080
+    depends_on:
+      - config-server
+
   wiremock:
     image: rodolpheche/wiremock
     container_name: wiremock
     command: --local-response-templating --verbose
     restart: always
-    volumes:
-      - ../wiremock/data:/home/wiremock:ro
-    networks:
-      - spring-test-network
-    ports:
-      - 4999:8080
     logging:
       driver: "fluentd"
       options:
         fluentd-address: 0.0.0.0:24224
         tag: wiremock.logs
         fluentd-async-connect: 'true'
+    volumes:
+      - ../wiremock/data:/home/wiremock:ro
+    networks:
+      - spring-test-network
+    ports:
+      - 4999:8080
