@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 @RefreshScope //reloads the custom Spring properties you have in your application configuration.
-// Items like your database configuration used by Spring Data won’t be reloaded by thisannotation
+// Items like your database configuration used by Spring Data won’t be reloaded by this annotation
 @EnableFeignClients
 @SpringBootApplication
 @EnableConfigurationProperties(value = {KafkaProperties.class, ApplicationProperties.class})
