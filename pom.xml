@@ -20,6 +20,7 @@
     <properties>
         <java.version>18</java.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
+        <infrastructure-folder>${basedir}/../infastructure</infrastructure-folder>
     </properties>
 
     <build>
@@ -46,12 +47,11 @@
         </dependencies>
     </dependencyManagement>
 
-
-
     <modules>
         <module>app</module>
+        <module>app-support</module>
         <module>config-server</module>
-        <module>spring-test-eureka</module>
+        <module>eureka</module>
     </modules>
 
 </project>

@@ -1,6 +1,7 @@
 package com.spring.test.app.controller;
 
-import com.spring.test.app.client.TestFeign;
+import com.spring.test.app.client.AppSupportClient;
+import com.spring.test.app.client.TestClient;
 import com.spring.test.app.config.ApplicationProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,9 @@ import java.util.Locale;
 @RequiredArgsConstructor
 public class PublicController {
 
-    private final TestFeign testFeign;
+    private final TestClient testClient;
+
+    private final AppSupportClient appSupportClient;
 
     private final MessageSource messageSource;
 
@@ -39,7 +42,7 @@ public class PublicController {
         return applicationProperties.getEditableValue();
     }
 
-    @GetMapping(path = "/test")
+    @GetMapping(path = "/echo-test")
     public String callPublicApi(@RequestParam @NotEmpty String text) {
         return text;
     }
@@ -47,7 +50,12 @@ public class PublicController {
     @GetMapping(path = "/test-feign")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void callFeignClient() {
-        testFeign.testFeign();
+        testClient.testFeign();
+    }
+
+    @GetMapping(path = "/pid")
+    public Long pid() {
+        return appSupportClient.getPid();
     }
 
 
