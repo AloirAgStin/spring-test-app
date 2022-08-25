@@ -6,10 +6,6 @@
 ```
 docker network create -d bridge  sprin-test-network
 ```
-или
-```shell
-docker network create --driver=bridge --subnet=172.16.238.0/16 sprin-test-network
-```
 
 2. Выполнить в [каталоге](infrastructure/spring-test-application) **docker compose up -d**:
 - консоль keycloak [https://localhost:4443](https://localhost:4443)
@@ -18,6 +14,8 @@ docker network create --driver=bridge --subnet=172.16.238.0/16 sprin-test-networ
 - eureka дашборд [https://localhost:4070](https://localhost:4070)
 - application [https://localhost:4080](https://localhost:4070)
 - postgres port: **4432**
+
+3. Для сборки логов используется vector.dev и fluentd драйвер
 
 
 ## Полезности:
@@ -35,4 +33,5 @@ curl --location --request POST 'https://localhost:4443/realms/spring-test-app/pr
 
 ## Config bus:
 https://medium.com/swlh/spring-cloud-config-bus-auto-refresh-properties-for-clients-d18fa4c036cb
+
 
