@@ -1,11 +1,11 @@
 # Set global options
-[sources.config-service]
+[sources.spring-test]
 type = "fluent"
 address = "0.0.0.0:24224"
 
 [sinks.file]
 type = "file"
-inputs = [ "config-service" ]
+inputs = [ "spring-test" ]
 compression = "none"
 path = "/tmp/service-%Y-%m-%d.log"
 
@@ -14,7 +14,7 @@ codec = "json"
 
 [sinks.my_sink_id]
 type = "console"
-inputs = [ "config-service" ]
+inputs = [ "spring-test" ]
 target = "stdout"
 
 [sinks.my_sink_id.encoding]

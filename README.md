@@ -2,12 +2,25 @@
 
 ## Deployment
 
-1. Выполнить в [каталоге](infrastructure/spring-test-application) **docker compose up -d**:
-- keycloak [https://localhost:4443](https://localhost:4443)
+1. Создать сеть докера
+```
+docker network create -d bridge  sprin-test-network
+```
+или
+```shell
+docker network create --driver=bridge --subnet=172.16.238.0/16 sprin-test-network
+```
+
+2. Выполнить в [каталоге](infrastructure/spring-test-application) **docker compose up -d**:
+- консоль keycloak [https://localhost:4443](https://localhost:4443)
+- config-server: https://localhost:4071/{APPLICATION_NAME}/{PROFILE}, где APPLICATION_NAME - имя сервиса
+         PROFILE - профиль (default по умолчанию)
+- eureka дашборд [https://localhost:4070](https://localhost:4070)
+- application [https://localhost:4080](https://localhost:4070)
 - postgres port: **4432**
 
 
-
+## Полезности:
 ### Keycloak
 1. [authorization code](https://localhost:4443/realms/spring-test-app/protocol/openid-connect/auth?response_type=code&client_id=sprint-test-app-client&redirect_uri=http://localhost:9874)
 ```
@@ -23,10 +36,3 @@ curl --location --request POST 'https://localhost:4443/realms/spring-test-app/pr
 ## Config bus:
 https://medium.com/swlh/spring-cloud-config-bus-auto-refresh-properties-for-clients-d18fa4c036cb
 
-
-## Deploy
-### Создать docker-сеть **yourhouse**:<br/>
-`docker network create -d bridge  sprin-test-network`
-
-
-`docker network create --driver=bridge --subnet=172.16.238.0/16 sprin-test-network`

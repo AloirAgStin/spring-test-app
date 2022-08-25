@@ -33,6 +33,25 @@ services:
     ports:
       - 4071:8071
 
+  eureka:
+    container_name: eureka
+    build:
+      context: ../eureka
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 0.0.0.0:24224
+        tag: config-server.logs
+        fluentd-async-connect: 'true'
+    volumes:
+      -  ../config-server/config:/config
+    networks:
+      - spring-test-network
+    ports:
+      - 4070:8070
+    depends_on:
+      - config-server
+
   postgres-db:
     container_name: postgres-db
     image: postgres
@@ -81,9 +100,42 @@ services:
     networks:
       - spring-test-network
     ports:
-      - 8080:8080
+      - 4080:8080
     depends_on:
       - config-server
+      - eureka
+
+  app-support:
+    container_name: app-support
+    build:
+      context: ../app-support
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 0.0.0.0:24224
+        tag: app-suport.logs
+        fluentd-async-connect: 'true'
+    networks:
+      - spring-test-network
+    depends_on:
+      - config-server
+      - eureka
+
+  app-support2:
+    container_name: app-support2
+    build:
+      context: ../app-support
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: 0.0.0.0:24224
+        tag: app-suport.logs
+        fluentd-async-connect: 'true'
+    networks:
+      - spring-test-network
+    depends_on:
+      - config-server
+      - eureka
 
   wiremock:
     image: rodolpheche/wiremock

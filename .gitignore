@@ -32,8 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
-# pg data
 /infrastructure/spring-test-application/backup
 /infrastructure/spring-test-application/data
 /infrastructure/spring-test-application/log
 /infrastructure/**/**.jar
+target/
