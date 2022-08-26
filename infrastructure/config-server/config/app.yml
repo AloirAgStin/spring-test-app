@@ -1,0 +1,13 @@
+spring-test-app:
+  editable-value: value from config server
+  client:
+    test-feign: http://wiremock:4999
+
+keycloak:
+  auth-server-url: https://keycloak:8443
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8070/eureka
+

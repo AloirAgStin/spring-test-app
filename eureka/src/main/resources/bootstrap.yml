@@ -1,6 +1,18 @@
 server:
   port: 8070
 
+spring:
+  application:
+    name: eureka
+  config:
+    import: optional:configserver:http://localhost:8071
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    inetutils:
+      default-hostname: localhost
+
 eureka:
   instance:
     hostname: localhost

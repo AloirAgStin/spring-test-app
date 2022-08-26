@@ -11,7 +11,7 @@
 
     <artifactId>config-server</artifactId>
     <version>0.0.1</version>
-    <name>sprint-test-config-server</name>
+    <name>config-server</name>
 
     <dependencies>
         <dependency>

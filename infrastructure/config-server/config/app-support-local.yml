@@ -1,0 +1,9 @@
+server:
+  port: 8090
+
+eureka:
+  instance:
+    ip-address: 127.0.0.1
+  client:
+    service-url:
+      defaultZone: http://localhost:8070/eureka

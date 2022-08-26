@@ -1,5 +1,4 @@
 server:
-  port: 8090
   servlet:
     encoding:
       enabled: true
@@ -16,6 +15,12 @@ spring:
       add-mappings: false
   config:
     import: optional:configserver:http://localhost:8071
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    inetutils:
+      default-hostname: localhost
 
 management:
   endpoints:
@@ -26,8 +31,4 @@ management:
 eureka:
   instance:
     prefer-ip-address: true
-  client:
-    service-url:
-      defaultZone: http://localhost:8070/eureka
-
-
+    instance-id: ${eureka.instance.ip-address}:${server.port}

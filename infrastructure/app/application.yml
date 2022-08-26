@@ -1,17 +1,3 @@
 spring:
   config:
     import: optional:configserver:http://config-server:8071
-
-spring-test-app:
-  editable-value: 12354543
-  client:
-    test-feign: http://wiremock:4999
-
-keycloak:
-  auth-server-url: https://keycloak:8443
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka:8070/eureka
-

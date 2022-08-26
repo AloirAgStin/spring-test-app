@@ -1,0 +1,18 @@
+spring-test-app:
+  editable-value: value from local config server
+  client:
+    test-feign: http://localhost:4999
+    app-support: APP-SUPPORT
+  kafka:
+    enabled: false
+    bootstrap-address: localhost:9092
+
+eureka:
+  instance:
+    ip-address: 127.0.0.1
+  client:
+    service-url:
+      defaultZone: http://localhost:8070/eureka
+
+keycloak:
+  auth-server-url: https://localhost:8443
