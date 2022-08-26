@@ -23,6 +23,29 @@ management:
       exposure:
         include: "*"
 
+resilience4j:
+  circuitbreaker:
+    instances:
+      app-support-call:
+        register-health-indicator: true
+        sliding-window-size: 3
+        sliding-window-type: count_based
+        # время, которое размыкатель должен ждать перед переходом из разомкнутого состояния в полуоткрытое.
+        wait-duration-in-open-state: 30s
+        # Порог частоты отказов в %. Когда частота отказов оказывается больше или равна этому порогу,
+        # размыкатель переходит в разомкнутое состояние и начинает отвергать вызовы
+        failure-rate-threshold: 50
+        # исключение которые должны расцениваться как сбои
+        record-exceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+          - org.springframework.web.client.ResourceAccessException
+
+feign:
+  circuitbreaker:
+    enabled: true
+
 spring-test-app:
   editable-value: init-value
   client:

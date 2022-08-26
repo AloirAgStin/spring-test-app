@@ -3,8 +3,10 @@ package com.spring.test.app.controller;
 import com.spring.test.app.client.AppSupportClient;
 import com.spring.test.app.client.TestClient;
 import com.spring.test.app.config.ApplicationProperties;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotEmpty;
+import java.io.IOException;
 import java.util.Locale;
 
 
@@ -53,10 +56,18 @@ public class PublicController {
         testClient.testFeign();
     }
 
+    @CircuitBreaker(name = "app-support-call", fallbackMethod = "fallback")
     @GetMapping(path = "/pid")
-    public Long pid() {
+    public Long pid(@RequestParam(defaultValue = "false") Boolean runSuccess) throws IOException {
+        if (RandomUtils.nextInt() % 2 == 0 && !runSuccess) {
+            throw new IOException("asdf");
+        }
         return appSupportClient.getPid();
     }
 
+    private Long fallback(Throwable t) {
+        log.error("call fallback method", t);
+        return 1L;
+    }
 
 }
