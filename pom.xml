@@ -49,7 +49,7 @@
     </dependencyManagement>
 
     <modules>
-        <!--<module>gateway</module>-->
+        <module>gateway</module>
         <module>eureka</module>
         <module>config-server</module>
         <module>app</module>

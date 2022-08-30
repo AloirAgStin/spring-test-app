@@ -21,5 +21,5 @@ eureka:
     fetch-registry: false
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-  server:
-    wait-time-in-ms-when-sync-empty: 5
+ # server:
+    #wait-time-in-ms-when-sync-empty: 5

@@ -58,7 +58,7 @@ public class PublicController {
 
     @CircuitBreaker(name = "app-support-call", fallbackMethod = "fallback")
     @GetMapping(path = "/pid")
-    public Long pid(@RequestParam(defaultValue = "false") Boolean runSuccess) throws IOException {
+    public Long pid(@RequestParam(defaultValue = "true") Boolean runSuccess) throws IOException {
         if (RandomUtils.nextInt() % 2 == 0 && !runSuccess) {
             throw new IOException("asdf");
         }
